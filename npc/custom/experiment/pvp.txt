@@ -1,0 +1,42 @@
+prontera.gat,155,187,4	script	PVP Warper	105,{
+
+
+	mes "[ PVP Warper ]";
+	mes "Would You Like to Enter the Room?";
+	next;
+	menu "Yes, I'm Hunger for Blood",PatayanNa,"No, Too Lazy to Kill",No;
+
+	PatayanNa:
+	mes "[ PvP Warper ]";
+	mes "You Made the Right Choice!";
+	next;
+	mes "Let's Go!";
+	warp "guild_vs3",0,0;
+	L_All:
+	announce "[ PvP Warper ] Announcer:  "+strcharinfo(0)+" has Enter the Room ",0;
+	close;
+
+
+	No:
+	mes "[ PvP Warper ]";
+	mes "Are you Scared?";
+	next;
+	mes "Come Back Again, if you already have the Guts!";
+	close;
+
+//WAITING ROOM updates every 2.5 second
+OnInit:
+    	while(1) {
+	delwaitingroom;
+	waitingroom "PvP Warper ["+getmapusers("guild_vs3")+"]",0;
+	sleep 2500; //2.5 seconds
+	}
+	end;
+}
+
+// Mapflags
+guild_vs3	mapflag	nowarp
+guild_vs3	mapflag	nowarpto
+guild_vs3	mapflag	pvp	on
+guild_vs3	mapflag	noteleport
+guild_vs3	mapflag	nosave	SavePoint

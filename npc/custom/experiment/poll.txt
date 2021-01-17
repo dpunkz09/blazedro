@@ -1,0 +1,84 @@
+//======Name========================================
+// In-Game Poll
+//======Version======================================
+// 1.0
+//======Author(s)=====================================
+// Sandbox
+//======Comments====================================
+// Based on the idea of Kido, this script can server as a poll where you
+// can use it to get the satisfaction rating of your players on whether
+// your staff, features, and etc.
+//==================================================
+
+prontera,161,184,4	script	Dokidoki	46,{
+
+mes .Npc_Name$;
+if(!getgroupid()) { 
+	mes "Which GM do you want to rate?";
+	set @choice,select(""+implode(.GM_List$,":")+"");
+	@choice--;
+	next;
+	mes .Npc_Name$;
+	disable_command;
+	if(getd("#Rate_"+@choice) > 0) {
+		mes "You already rated this GM!","If you think this is a mistake, kindly relog and vote again.","Thank you!";
+		close;
+	}
+	mes "Rate them per criteria (1 lowest, 10 highest)";
+	for(.@i = 0; .@i < 10; .@i++) {
+		mes .Questions$[.@i];
+		input @rate,1,10;
+		$GM_Score[@choice] += @rate;
+	}
+	$GM_Rates[@choice]++;
+	next;
+	mes .Npc_Name$;
+	mes "Thank you for voting!";
+	setd "#Rate_"+@choice,1;
+	enable_command;
+	close;
+
+}
+else if (getgroupid() > 5) {
+	mes "Hello, what do you wanna do?";
+	.@gms = getarraysize(.GM_List$);
+	switch(select("Show Results:Reset Ratings")) {
+		next;
+		mes .Npc_Name$;
+		case 1:
+			for(.@i=0; .@i < .@gms; .@i++) {
+				if($GM_Score[.@i] > 0)
+					mes .GM_List$[.@i]+": "+$GM_Score[.@i]/$GM_Rates[.@i]+"% Based from "+$GM_Rates[.@i]+" players.";
+				else
+					mes .GM_List$[.@i]+": 0% Based from 0 players.";
+			}
+			close; break;
+		case 2:
+			mes "Done!";
+			cleararray $GM_Score[0],0,getarraysize($GM_Score);
+			cleararray $GM_Rates[0],0,getarraysize($GM_Rates);
+			query_sql("UPDATE global_reg_value SET value='0' WHERE str LIKE '#Rate_%'");
+			close; break;
+	}
+}
+end;
+
+OnInit:
+	.Npc_Name$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	//Set your menu option / questions here. (GM's to be rated, feature to be rated)
+	setarray .GM_List$[0],"[GM] Kido","[GM] Sandbox","[GM] ToastOfDoom";
+
+	//Set the criterias to be used for the ratings. (Ex. GM Friendliness rating / How balanced is the new feature)
+	setarray .Questions$[0],"My criteria 1", 
+				"My criteria 2",
+				"My criteria 3",
+				"My criteria 4",
+				"My criteria 5",
+				"My criteria 6",
+				"My criteria 7",
+				"My criteria 8",
+				"My criteria 9",
+				"My criteria 10";
+	end;
+
+}

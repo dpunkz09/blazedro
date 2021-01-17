@@ -1,0 +1,19 @@
+-	script	News	-1,{
+OnInit:
+set .Time,60;		// Announce every x Minute.
+
+setarray .News$[0],	// Random Message to be Announced
+		"Join events to earn Poring Coins",
+		"Exchange Poring Coins to Cash Points using the PoringCoin Changer NPC",
+		"WoE winner will be given a Golden Key. Golden Key is use to claim WoE prizes from the WoE Prizes NPC",
+		"",
+		"WoE Prizes changes every WoE",
+		" sadasdasd ",
+		"Updated News 7 every X Minute";
+		
+while( 1 ){
+	announce .News$[ rand( getarraysize( .News$ ) ) ],0;
+	sleep ( .Time * 60000 );
+	}
+end;
+}

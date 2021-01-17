@@ -1,0 +1,47 @@
+prontera,157,184,5 script Pvp Warper 758,{
+mes "[Pvp Warper]";
+mes "Hallo saya adalah Penjaga pintu Pvp";
+mes "Apakah anda ingin pergi ke pvp room?";
+next;
+menu "Mau !",oke,"Tidak",no;
+oke:
+mes "[Pvp Warper]";
+mes "Silahkan Pilih Pvp room yg anda inginkan.";
+next;
+menu "Room 1 [" + getmapusers("guild_vs1.gat") + " / 222]",room,
+"Room 2 [" + getmapusers("guild_vs2.gat") + " / 10]",rooom,
+"Room 3 [" + getmapusers("guild_vs3.gat") + " / 10]",roooom;
+
+room:
+mes "[Pvp Warper]";
+mes "Sebentar dicek dulu";
+next;
+if (getmapusers("guild_vs1.gat") > 222) goto Lsorry;
+warp "guild_vs1",0,0;
+close;
+
+rooom:
+mes "[Pvp Warper]";
+mes "Sebentar dicek dulu";
+next;
+if (getmapusers("guild_vs2.gat") > 10) goto Lsorry;
+warp "guild_vs2",0,0;
+close;
+
+roooom:
+mes "[Pvp Warper]";
+mes "Sebentar dicek dulu";
+next;
+if (getmapusers("guild_vs3.gat") > 10) goto Lsorry;
+warp "guild_vs3",0,0;
+close;
+
+Lsorry:
+mes "[Pvp Warper]";
+mes "Maaf Pvp room yang anda pilih penuh";
+mes "Silahkan gunakan Room yang lain";
+close;
+
+no:
+close;
+}

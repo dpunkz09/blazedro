@@ -1,0 +1,4 @@
+prontera,141,179,6	script	Street Mall	910,{
+
+     warp "prontera",156,252;
+}

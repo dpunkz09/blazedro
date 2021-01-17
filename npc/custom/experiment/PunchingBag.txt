@@ -1,0 +1,5 @@
+-	script	Punching Bag	-1,{
+OnInit:
+OnDeath:
+monster "prontera",156,159,"Punching Bag",1905,1,strnpcinfo(3)+"::OnDeath";
+}
